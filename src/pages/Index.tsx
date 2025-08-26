@@ -1,11 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackgroundSVG from '@/components/BackgroundSVG';
 import LoginForm from '@/components/LoginForm';
 import HelpButton from '@/components/HelpButton';
 
 const Index: React.FC = () => {
+  const navigate = useNavigate();
+  
   const handleSignUp = () => {
-    console.log('Sign up clicked');
+    navigate('/signup');
   };
 
   return (
