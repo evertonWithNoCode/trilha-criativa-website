@@ -1,14 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import BackgroundSVG from '@/components/BackgroundSVG';
 import LoginForm from '@/components/LoginForm';
 import HelpButton from '@/components/HelpButton';
 
 const Index: React.FC = () => {
-  const navigate = useNavigate();
-  
   const handleSignUp = () => {
-    navigate('/signup');
+    console.log('Sign up clicked');
   };
 
   return (
@@ -35,7 +32,7 @@ const Index: React.FC = () => {
 
       <LoginForm />
 
-      <footer className="w-[330px] h-5 text-center text-base leading-5 tracking-[0.16px] absolute left-[555px] top-[803px] max-md:w-full max-md:-translate-x-2/4 max-md:left-2/4 max-md:top-auto max-md:bottom-20 max-sm:text-sm max-sm:px-4 max-sm:py-0 max-sm:bottom-[60px]">
+      <footer className="w-[330px] h-[400px] text-center text-base leading-5 tracking-[0.16px] absolute left-[555px] top-[803px] max-md:w-full max-md:-translate-x-2/4 max-md:left-2/4 max-md:top-auto max-md:bottom-20 max-sm:text-sm max-sm:px-4 max-sm:py-0 max-sm:bottom-[60px]">
         <span className="text-[#2C2623] font-normal">
           Não possui conta ainda?{' '}
         </span>
