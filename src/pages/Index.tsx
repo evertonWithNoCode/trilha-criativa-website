@@ -32,7 +32,7 @@ const Index: React.FC = () => {
 
       <LoginForm />
 
-      <footer className="w-[330px] h-[400px] text-center text-base leading-5 tracking-[0.16px] absolute left-[555px] top-[803px] max-md:w-full max-md:-translate-x-2/4 max-md:left-2/4 max-md:top-auto max-md:bottom-20 max-sm:text-sm max-sm:px-4 max-sm:py-0 max-sm:bottom-[60px]">
+      <footer className="w-[330px] h-[500px] text-center text-base leading-5 tracking-[0.16px] absolute left-[555px] top-[803px] max-md:w-full max-md:-translate-x-2/4 max-md:left-2/4 max-md:top-auto max-md:bottom-20 max-sm:text-sm max-sm:px-4 max-sm:py-0 max-sm:bottom-[60px] flex items-center justify-center">
         <span className="text-[#2C2623] font-normal">
           Não possui conta ainda?{' '}
         </span>

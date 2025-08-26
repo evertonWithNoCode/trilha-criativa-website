@@ -35,7 +35,7 @@ const Signup = () => {
 
       <SignupForm />
 
-      <div className="text-[#2C2623] text-base font-extrabold leading-5 tracking-[0.16px] absolute w-[262px] h-5 left-[589px] top-[803px] max-md:-translate-x-2/4 max-md:text-center max-md:left-2/4 max-md:top-auto max-md:bottom-[100px] max-sm:text-sm max-sm:bottom-20">
+      <div className="text-[#2C2623] text-base font-extrabold leading-5 tracking-[0.16px] absolute w-[262px] h-10 left-[589px] top-[803px] max-md:-translate-x-2/4 max-md:text-center max-md:left-2/4 max-md:top-auto max-md:bottom-[100px] max-sm:text-sm max-sm:bottom-20 flex items-center justify-center">
         Você já possui cadastro?{' '}
         <button
           onClick={handleLoginClick}
