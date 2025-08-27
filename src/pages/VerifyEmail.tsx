@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import HelpButton from "@/components/HelpButton";
 import { BackgroundDecoration } from "@/components/BackgroundDecoration";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 
 export default function VerifyEmail() {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const navigate = useNavigate();
@@ -14,36 +15,19 @@ export default function VerifyEmail() {
   const { verifyOtp, resendOtp } = useAuth();
   
   // Get email from navigation state
-  const email = location.state?.email || "seu-email@email.com";
+  const email = location.state?.email || "nome@email.com";
 
-  const handleCodeChange = (index: number, value: string) => {
-    if (value.length <= 1 && /^[0-9]*$/.test(value)) {
-      const newCode = [...code];
-      newCode[index] = value;
-      setCode(newCode);
-      
-      // Auto focus next input
-      if (value && index < 5) {
-        const nextInput = document.getElementById(`code-input-${index + 1}`);
-        nextInput?.focus();
-      }
-
-      // Auto submit when all fields are filled
-      if (newCode.every(digit => digit !== "") && newCode[5] !== "") {
-        handleVerifyCode(newCode.join(""));
-      }
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === "Backspace" && !code[index] && index > 0) {
-      const prevInput = document.getElementById(`code-input-${index - 1}`);
-      prevInput?.focus();
+  const handleCodeChange = (value: string) => {
+    setCode(value);
+    
+    // Auto submit when all fields are filled
+    if (value.length === 6) {
+      handleVerifyCode(value);
     }
   };
 
   const handleVerifyCode = async (verificationCode?: string) => {
-    const codeToVerify = verificationCode || code.join("");
+    const codeToVerify = verificationCode || code;
     
     if (codeToVerify.length !== 6) {
       toast.error("Por favor, digite o código completo");
@@ -57,17 +41,14 @@ export default function VerifyEmail() {
       
       if (error) {
         toast.error("Código inválido ou expirado");
-        // Clear the code inputs
-        setCode(["", "", "", "", "", ""]);
-        document.getElementById("code-input-0")?.focus();
+        setCode("");
       } else {
         toast.success("Email verificado com sucesso!");
         navigate("/");
       }
     } catch (error) {
       toast.error("Erro ao verificar código");
-      setCode(["", "", "", "", "", ""]);
-      document.getElementById("code-input-0")?.focus();
+      setCode("");
     } finally {
       setLoading(false);
     }
@@ -83,8 +64,7 @@ export default function VerifyEmail() {
         toast.error("Erro ao reenviar código");
       } else {
         toast.success("Código reenviado com sucesso!");
-        setCode(["", "", "", "", "", ""]);
-        document.getElementById("code-input-0")?.focus();
+        setCode("");
       }
     } catch (error) {
       toast.error("Erro ao reenviar código");
@@ -99,7 +79,7 @@ export default function VerifyEmail() {
 
   // Auto focus first input on mount
   useEffect(() => {
-    document.getElementById("code-input-0")?.focus();
+    // InputOTP handles focus automatically
   }, []);
 
   return (
@@ -130,31 +110,26 @@ export default function VerifyEmail() {
           </p>
 
           {/* Code Input Fields */}
-          <div className="flex justify-center gap-2 md:gap-3 mt-8 md:mt-12">
-            {code.map((digit, index) => (
-              <input
-                key={index}
-                id={`code-input-${index}`}
-                type="text"
-                value={digit}
-                onChange={(e) => handleCodeChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                disabled={loading}
-                className="w-12 h-16 md:w-16 md:h-20 lg:w-18 lg:h-20 text-center text-xl md:text-2xl font-semibold 
-                          border-2 border-border rounded-2xl md:rounded-3xl bg-background
-                          focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary
-                          shadow-[0_3px_0_0_hsl(var(--muted))] transition-all duration-200
-                          hover:shadow-[0_4px_0_0_hsl(var(--muted))] hover:translate-y-[-1px]
-                          disabled:opacity-50 disabled:cursor-not-allowed"
-                maxLength={1}
-                inputMode="numeric"
-                pattern="[0-9]*"
-              />
-            ))}
+          <div className="flex justify-center mt-8 md:mt-12">
+            <InputOTP 
+              maxLength={6} 
+              value={code} 
+              onChange={handleCodeChange}
+              disabled={loading}
+            >
+              <InputOTPGroup>
+                <InputOTPSlot index={0} className="w-12 h-16 md:w-16 md:h-20 text-xl md:text-2xl font-semibold border-2 border-border rounded-xl bg-background" />
+                <InputOTPSlot index={1} className="w-12 h-16 md:w-16 md:h-20 text-xl md:text-2xl font-semibold border-2 border-border rounded-xl bg-background" />
+                <InputOTPSlot index={2} className="w-12 h-16 md:w-16 md:h-20 text-xl md:text-2xl font-semibold border-2 border-border rounded-xl bg-background" />
+                <InputOTPSlot index={3} className="w-12 h-16 md:w-16 md:h-20 text-xl md:text-2xl font-semibold border-2 border-border rounded-xl bg-background" />
+                <InputOTPSlot index={4} className="w-12 h-16 md:w-16 md:h-20 text-xl md:text-2xl font-semibold border-2 border-border rounded-xl bg-background" />
+                <InputOTPSlot index={5} className="w-12 h-16 md:w-16 md:h-20 text-xl md:text-2xl font-semibold border-2 border-border rounded-xl bg-background" />
+              </InputOTPGroup>
+            </InputOTP>
           </div>
 
           {/* Manual Verify Button (if needed) */}
-          {code.join("").length === 6 && !loading && (
+          {code.length === 6 && !loading && (
             <button
               onClick={() => handleVerifyCode()}
               disabled={loading}
