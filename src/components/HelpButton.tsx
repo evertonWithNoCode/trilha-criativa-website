@@ -8,7 +8,7 @@ const HelpButton: React.FC = () => {
   return (
     <button
       onClick={handleHelpClick}
-      className="flex w-16 h-16 items-center gap-2 absolute cursor-pointer bg-[#F7B34D] p-4 rounded-[100px] left-[1352px] top-[775px] max-md:left-auto max-md:right-5 max-md:top-auto max-md:bottom-5 max-sm:w-14 max-sm:h-14 max-sm:p-3 max-sm:right-4 max-sm:bottom-4 hover:bg-[#e6a043] transition-colors"
+      className="fixed w-16 h-16 items-center gap-2 cursor-pointer bg-[#F7B34D] p-4 rounded-[100px] bottom-8 right-8 max-sm:w-14 max-sm:h-14 max-sm:p-3 max-sm:bottom-6 max-sm:right-6 hover:bg-[#e6a043] transition-colors flex z-50"
       aria-label="Ajuda"
     >
       <div
