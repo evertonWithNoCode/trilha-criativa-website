@@ -37,7 +37,7 @@ const LoginForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-[512px] h-[364px] flex-col items-start gap-8 shadow-[0_3px_0_0_#FFE0B2] absolute bg-white p-8 rounded-3xl border-2 border-solid border-[#FBDEB1] left-[464px] top-[302px] max-md:w-[calc(100%_-_40px)] max-md:max-w-[480px] max-md:-translate-x-2/4 max-md:p-6 max-md:left-2/4 max-md:top-[220px] max-sm:w-[calc(100%_-_32px)] max-sm:p-5 max-sm:rounded-2xl max-sm:top-[180px]"
+      className="flex w-[512px] flex-col items-start gap-8 shadow-[0_3px_0_0_#FFE0B2] bg-white p-8 rounded-3xl border-2 border-solid border-[#FBDEB1] max-md:w-[calc(100%_-_40px)] max-md:max-w-[480px] max-md:p-6 max-sm:w-[calc(100%_-_32px)] max-sm:p-5 max-sm:rounded-2xl"
     >
       <div className="flex w-[448px] flex-col items-start gap-5 max-md:w-full">
         <div className="flex flex-col items-start gap-2 self-stretch">
