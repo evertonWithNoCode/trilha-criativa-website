@@ -13,7 +13,7 @@ const Index: React.FC = () => {
 
   return (
     <main className="w-full min-h-screen relative overflow-hidden bg-[#FFFCF2] max-lg:rounded-none lg:rounded-[20px] lg:max-w-[1440px] lg:min-h-[863px] lg:mx-auto max-md:p-5 max-sm:p-4">
-      
+      <BackgroundSVG />
       
       <header>
         <img
