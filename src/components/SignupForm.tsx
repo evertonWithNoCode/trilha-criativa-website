@@ -120,7 +120,7 @@ export const SignupForm: React.FC = () => {
           </div>
         </div>
 
-      
+        
 
         <button
           type="submit"
@@ -130,7 +130,7 @@ export const SignupForm: React.FC = () => {
             Criar conta
           </span>
         </button>
-          <div className="flex items-center gap-4 self-stretch">
+        <div className="flex items-center gap-4 self-stretch">
           <div className="relative">
             <input
               type="checkbox"
