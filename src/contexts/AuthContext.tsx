@@ -41,16 +41,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
+    // Create user in Supabase Auth without email confirmation
+    const { error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: redirectUrl
+        emailRedirectTo: `${window.location.origin}/`,
+        data: {
+          email_confirm: false
+        }
       }
     });
-    return { error };
+    
+    if (authError) {
+      return { error: authError };
+    }
+
+    // Send custom verification code via Edge Function
+    try {
+      const { error: codeError } = await supabase.functions.invoke('send-verification-code', {
+        body: { email, type: 'signup' }
+      });
+      
+      if (codeError) {
+        console.error('Error sending verification code:', codeError);
+        return { error: { message: 'Erro ao enviar código de verificação' } };
+      }
+    } catch (error) {
+      console.error('Error calling send-verification-code function:', error);
+      return { error: { message: 'Erro ao enviar código de verificação' } };
+    }
+
+    return { error: null };
   };
 
   const signIn = async (email: string, password: string) => {
@@ -66,20 +88,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const verifyOtp = async (email: string, token: string) => {
-    const { error } = await supabase.auth.verifyOtp({
-      email,
-      token,
-      type: 'signup'
-    });
-    return { error };
+    try {
+      const { error } = await supabase.functions.invoke('verify-code', {
+        body: { email, code: token }
+      });
+      
+      if (error) {
+        console.error('Error verifying code:', error);
+        return { error: { message: 'Código inválido ou expirado' } };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      console.error('Error calling verify-code function:', error);
+      return { error: { message: 'Erro ao verificar código' } };
+    }
   };
 
   const resendOtp = async (email: string) => {
-    const { error } = await supabase.auth.resend({
-      type: 'signup',
-      email
-    });
-    return { error };
+    try {
+      const { error } = await supabase.functions.invoke('send-verification-code', {
+        body: { email, type: 'resend' }
+      });
+      
+      if (error) {
+        console.error('Error resending verification code:', error);
+        return { error: { message: 'Erro ao reenviar código' } };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      console.error('Error calling send-verification-code function:', error);
+      return { error: { message: 'Erro ao reenviar código' } };
+    }
   };
 
   const value = {
