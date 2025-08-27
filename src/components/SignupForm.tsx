@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface SignupFormData {
   name: string;
@@ -16,6 +19,9 @@ export const SignupForm: React.FC = () => {
     confirmPassword: '',
     acceptTerms: false,
   });
+  const [loading, setLoading] = useState(false);
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -25,9 +31,39 @@ export const SignupForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup attempt:', formData);
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('As senhas não coincidem');
+      return;
+    }
+
+    if (!formData.acceptTerms) {
+      toast.error('Você deve aceitar os termos e condições');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error } = await signUp(formData.email, formData.password);
+      
+      if (error) {
+        if (error.message.includes('User already registered')) {
+          toast.error('Este email já está cadastrado');
+        } else {
+          toast.error('Erro ao criar conta: ' + error.message);
+        }
+      } else {
+        toast.success('Conta criada com sucesso! Verifique seu email para confirmar.');
+        navigate('/');
+      }
+    } catch (error) {
+      toast.error('Erro inesperado ao criar conta');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -149,10 +185,11 @@ export const SignupForm: React.FC = () => {
 
         <button
           type="submit"
-          className="flex h-16 justify-center items-center gap-4 self-stretch cursor-pointer bg-[#F7B34D] pl-5 pr-6 py-2 rounded-[20px] hover:bg-[#e6a043] transition-colors max-sm:h-14 max-sm:rounded-2xl"
+          disabled={loading}
+          className="flex h-16 justify-center items-center gap-4 self-stretch cursor-pointer bg-[#F7B34D] pl-5 pr-6 py-2 rounded-[20px] hover:bg-[#e6a043] transition-colors disabled:opacity-50 disabled:cursor-not-allowed max-sm:h-14 max-sm:rounded-2xl"
         >
           <span className="text-white text-lg font-extrabold leading-6 tracking-[0.18px] max-sm:text-base">
-            Criar conta
+            {loading ? 'Criando conta...' : 'Criar conta'}
           </span>
         </button>
       </div>

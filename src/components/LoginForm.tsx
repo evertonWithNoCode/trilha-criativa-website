@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormData {
   email: string;
@@ -12,6 +15,9 @@ const LoginForm: React.FC = () => {
     password: '',
     rememberPassword: false,
   });
+  const [loading, setLoading] = useState(false);
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -21,17 +27,36 @@ const LoginForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', formData);
+    setLoading(true);
+
+    try {
+      const { error } = await signIn(formData.email, formData.password);
+      
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          toast.error('Email ou senha incorretos');
+        } else {
+          toast.error('Erro ao fazer login: ' + error.message);
+        }
+      } else {
+        toast.success('Login realizado com sucesso!');
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error('Erro inesperado ao fazer login');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleForgotPassword = () => {
-    console.log('Forgot password clicked');
+    toast.info('Funcionalidade em desenvolvimento');
   };
 
   const handleSignUp = () => {
-    console.log('Sign up clicked');
+    navigate('/signup');
   };
 
   return (
@@ -119,10 +144,11 @@ const LoginForm: React.FC = () => {
 
         <button
           type="submit"
-          className="flex h-16 justify-center items-center gap-4 self-stretch cursor-pointer bg-[#F7B34D] pl-5 pr-6 py-2 rounded-[20px] hover:bg-[#e6a043] transition-colors max-sm:h-14 max-sm:rounded-2xl"
+          disabled={loading}
+          className="flex h-16 justify-center items-center gap-4 self-stretch cursor-pointer bg-[#F7B34D] pl-5 pr-6 py-2 rounded-[20px] hover:bg-[#e6a043] transition-colors disabled:opacity-50 disabled:cursor-not-allowed max-sm:h-14 max-sm:rounded-2xl"
         >
           <span className="text-white text-lg font-extrabold leading-6 tracking-[0.18px] max-sm:text-base">
-            Acessar plataforma
+            {loading ? 'Entrando...' : 'Acessar plataforma'}
           </span>
         </button>
       </div>
