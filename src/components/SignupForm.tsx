@@ -57,7 +57,7 @@ export const SignupForm: React.FC = () => {
         }
       } else {
         toast.success('Conta criada com sucesso! Verifique seu email para confirmar.');
-        navigate('/');
+        navigate('/verify-email', { state: { email: formData.email } });
       }
     } catch (error) {
       toast.error('Erro inesperado ao criar conta');
