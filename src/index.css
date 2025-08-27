@@ -38,11 +38,6 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
-    /* Custom colors for verification page */
-    --verification-button: 45 100% 85%;
-    --verification-button-foreground: 20 14.3% 4.1%;
-    --verification-link: 25 95% 53%;
-
     --sidebar-background: 0 0% 98%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
