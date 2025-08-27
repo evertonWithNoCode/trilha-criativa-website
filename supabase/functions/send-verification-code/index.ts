@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4';
 import { Resend } from "npm:resend@2.0.0";
@@ -38,6 +39,8 @@ serve(async (req) => {
       });
     }
 
+    console.log('Processing verification request for:', email);
+
     // Generate 6-digit code
     const code = generateVerificationCode();
 
@@ -63,6 +66,7 @@ serve(async (req) => {
     }
 
     const userId = user.id;
+    console.log('Found user ID:', userId);
 
     // Mark existing codes as used
     await supabase
@@ -88,44 +92,79 @@ serve(async (req) => {
       });
     }
 
-    // Send email with verification code
-    const emailResponse = await resend.emails.send({
-      from: 'Verificação <onboarding@resend.dev>',
-      to: [email],
-      subject: 'Código de verificação - TC Project',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #333; text-align: center;">Código de Verificação</h2>
-          <p style="color: #666; font-size: 16px; line-height: 1.5;">
-            Olá! Use o código abaixo para verificar seu email:
-          </p>
-          <div style="background-color: #f5f5f5; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
-            <span style="font-size: 32px; font-weight: bold; color: #333; letter-spacing: 5px;">${code}</span>
-          </div>
-          <p style="color: #666; font-size: 14px;">
-            Este código expira em 10 minutos. Se você não solicitou este código, pode ignorar este email.
-          </p>
-        </div>
-      `,
-    });
+    console.log('Verification code saved, attempting to send email...');
 
-    if (emailResponse.error) {
-      console.error('Error sending email:', emailResponse.error);
-      return new Response(JSON.stringify({ error: 'Erro ao enviar email' }), {
+    // Send email with verification code
+    try {
+      const emailResponse = await resend.emails.send({
+        from: 'Verificação <onboarding@resend.dev>',
+        to: [email],
+        subject: 'Código de verificação - TC Project',
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333; text-align: center;">Código de Verificação</h2>
+            <p style="color: #666; font-size: 16px; line-height: 1.5;">
+              Olá! Use o código abaixo para verificar seu email:
+            </p>
+            <div style="background-color: #f5f5f5; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
+              <span style="font-size: 32px; font-weight: bold; color: #333; letter-spacing: 5px;">${code}</span>
+            </div>
+            <p style="color: #666; font-size: 14px;">
+              Este código expira em 10 minutos. Se você não solicitou este código, pode ignorar este email.
+            </p>
+          </div>
+        `,
+      });
+
+      if (emailResponse.error) {
+        console.error('Error sending email:', emailResponse.error);
+        
+        // Check if it's a domain verification error
+        if (emailResponse.error.message && emailResponse.error.message.includes('verify a domain')) {
+          return new Response(JSON.stringify({ 
+            error: 'Para enviar emails, você precisa verificar um domínio no Resend. Acesse https://resend.com/domains para configurar.' 
+          }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+        
+        return new Response(JSON.stringify({ error: 'Erro ao enviar email: ' + emailResponse.error.message }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      console.log('Verification code sent successfully:', { email, codeId: emailResponse.data?.id });
+
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'Código de verificação enviado com sucesso' 
+      }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+
+    } catch (emailError: any) {
+      console.error('Exception while sending email:', emailError);
+      
+      // Handle specific Resend errors
+      if (emailError.message && emailError.message.includes('verify a domain')) {
+        return new Response(JSON.stringify({ 
+          error: 'Para enviar emails, você precisa verificar um domínio no Resend. Acesse https://resend.com/domains para configurar.' 
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      
+      return new Response(JSON.stringify({ 
+        error: 'Erro ao enviar email. Verifique se o domínio está configurado no Resend.' 
+      }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-
-    console.log('Verification code sent successfully:', { email, codeId: emailResponse.data?.id });
-
-    return new Response(JSON.stringify({ 
-      success: true, 
-      message: 'Código de verificação enviado com sucesso' 
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
 
   } catch (error) {
     console.error('Error in send-verification-code function:', error);
