@@ -3,24 +3,16 @@ import { BackgroundDecoration } from '@/components/BackgroundDecoration';
 import { SignupForm } from '@/components/SignupForm';
 import HelpButton from '@/components/HelpButton';
 import { useNavigate } from 'react-router-dom';
-
 const Signup = () => {
   const navigate = useNavigate();
-  
   const handleLoginClick = () => {
     navigate('/');
   };
-
-  return (
-    <main className="w-full h-screen relative overflow-hidden bg-[#FFFCF2]">
+  return <main className="w-full h-screen relative overflow-hidden bg-[#FFFCF2]">
       <BackgroundDecoration />
       
       <header className="absolute left-10 top-10 max-md:left-5 max-md:top-5">
-        <img
-          src="https://api.builder.io/api/v1/image/assets/TEMP/09b8c8b2251ba50585cbbd8ee69d204f9ad06348?width=240"
-          alt="Trilha Criativa Logo"
-          className="w-[120px] h-[78px] shrink-0 aspect-[20/13] max-md:w-[100px] max-md:h-[65px] max-sm:w-20 max-sm:h-[52px]"
-        />
+        <img src="https://api.builder.io/api/v1/image/assets/TEMP/09b8c8b2251ba50585cbbd8ee69d204f9ad06348?width=240" alt="Trilha Criativa Logo" className="w-[120px] h-[78px] shrink-0 aspect-[20/13] max-md:w-[100px] max-md:h-[65px] max-sm:w-20 max-sm:h-[52px]" />
       </header>
 
       <div className="text-center">
@@ -35,19 +27,14 @@ const Signup = () => {
 
       <SignupForm />
 
-      <div className="text-[#2C2623] text-base font-extrabold leading-5 tracking-[0.16px] absolute w-[262px] h-5 left-[589px] top-[803px] max-md:-translate-x-2/4 max-md:text-center max-md:left-2/4 max-md:top-auto max-md:bottom-[100px] max-sm:text-sm max-sm:bottom-20">
+      <div className="text-[#2C2623] text-base font-extrabold leading-5 tracking-[0.16px] absolute w-[262px] h-5 left-[589px] top-[803px] max-md:-translate-x-2/4 max-md:text-center max-md:left-2/4 max-md:top-auto max-md:bottom-[100px] max-sm:text-sm max-sm:bottom-20 px-0 py-0 my-0">
         Você já possui cadastro?{' '}
-        <button
-          onClick={handleLoginClick}
-          className="font-bold text-base text-[#EEA63B] hover:underline cursor-pointer"
-        >
+        <button onClick={handleLoginClick} className="font-bold text-base text-[#EEA63B] hover:underline cursor-pointer">
           Faça login
         </button>
       </div>
 
       <HelpButton />
-    </main>
-  );
+    </main>;
 };
-
 export default Signup;
