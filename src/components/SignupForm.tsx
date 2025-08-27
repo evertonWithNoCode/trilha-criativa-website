@@ -145,7 +145,11 @@ export const SignupForm: React.FC = () => {
           >
             Aceito os termos e condições
           </label>
-           <button
+        </div>
+
+        
+      </div>
+      <button
           type="submit"
           className="flex h-16 justify-center items-center gap-4 self-stretch cursor-pointer bg-[#F7B34D] pl-5 pr-6 py-2 rounded-[20px] hover:bg-[#e6a043] transition-colors max-sm:h-14 max-sm:rounded-2xl"
         >
@@ -153,10 +157,6 @@ export const SignupForm: React.FC = () => {
             Criar conta
           </span>
         </button>
-        </div>
-
-       
-      </div>
     </form>
   );
 };
