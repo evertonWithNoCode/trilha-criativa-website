@@ -31,18 +31,28 @@ serve(async (req) => {
       });
     }
 
-    // Get user ID from auth.users table
-    const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(email);
+    // Get user ID from auth.users table using listUsers
+    const { data: usersData, error: userError } = await supabase.auth.admin.listUsers();
     
-    if (userError || !userData.user) {
-      console.error('User not found:', userError);
+    if (userError) {
+      console.error('Error listing users:', userError);
+      return new Response(JSON.stringify({ error: 'Erro ao buscar usuário' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const user = usersData.users.find(u => u.email === email);
+    
+    if (!user) {
+      console.error('User not found for email:', email);
       return new Response(JSON.stringify({ error: 'Usuário não encontrado' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    const userId = userData.user.id;
+    const userId = user.id;
 
     // Find valid verification code
     const { data: verificationData, error: verificationError } = await supabase
