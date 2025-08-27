@@ -12,7 +12,7 @@ const Signup = () => {
   };
 
   return (
-    <main className="w-full min-h-screen relative overflow-hidden bg-[#FFFCF2] max-lg:rounded-none lg:rounded-[20px] lg:max-w-[1440px] lg:min-h-[863px] lg:mx-auto">
+    <main className="w-full h-screen relative overflow-hidden bg-[#FFFCF2]">
       <BackgroundDecoration />
       
       <header className="absolute left-10 top-10 max-md:left-5 max-md:top-5">
