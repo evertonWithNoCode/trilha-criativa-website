@@ -33,7 +33,7 @@ export const SignupForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-[512px] h-[480px] flex-col items-start gap-6 shadow-[0_3px_0_0_#FFE0B2] absolute bg-white p-8 rounded-3xl border-2 border-solid border-[#FBDEB1] left-[464px] top-[220px] max-md:w-[calc(100%_-_40px)] max-md:max-w-[480px] max-md:-translate-x-2/4 max-md:p-6 max-md:left-2/4 max-md:top-[180px] max-sm:w-[calc(100%_-_32px)] max-sm:p-5 max-sm:rounded-2xl max-sm:top-[160px]"
+      className="flex w-[512px] h-[580px] flex-col items-start gap-6 shadow-[0_3px_0_0_#FFE0B2] absolute bg-white p-8 rounded-3xl border-2 border-solid border-[#FBDEB1] left-[464px] top-[220px] max-md:w-[calc(100%_-_40px)] max-md:max-w-[480px] max-md:-translate-x-2/4 max-md:p-6 max-md:left-2/4 max-md:top-[180px] max-sm:w-[calc(100%_-_32px)] max-sm:p-5 max-sm:rounded-2xl max-sm:top-[160px]"
     >
       <div className="flex w-[448px] flex-col items-start gap-5 max-md:w-full">
         <div className="flex flex-col items-start gap-2 self-stretch">
@@ -147,9 +147,7 @@ export const SignupForm: React.FC = () => {
           </label>
         </div>
 
-        
-      </div>
-      <button
+        <button
           type="submit"
           className="flex h-16 justify-center items-center gap-4 self-stretch cursor-pointer bg-[#F7B34D] pl-5 pr-6 py-2 rounded-[20px] hover:bg-[#e6a043] transition-colors max-sm:h-14 max-sm:rounded-2xl"
         >
@@ -157,6 +155,7 @@ export const SignupForm: React.FC = () => {
             Criar conta
           </span>
         </button>
+      </div>
     </form>
   );
 };
