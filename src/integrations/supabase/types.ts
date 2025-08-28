@@ -7,61 +7,102 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
-  }
+    PostgrestVersion: "13.0.4";
+  };
   public: {
     Tables: {
       email_verifications: {
         Row: {
-          attempts: number | null
-          code: string
-          created_at: string | null
-          email: string
-          expires_at: string | null
-          id: string
-          used: boolean | null
-          user_id: string | null
-        }
+          attempts: number | null;
+          code: string;
+          created_at: string | null;
+          email: string;
+          expires_at: string | null;
+          id: string;
+          used: boolean | null;
+          user_id: string | null;
+        };
         Insert: {
-          attempts?: number | null
-          code: string
-          created_at?: string | null
-          email: string
-          expires_at?: string | null
-          id?: string
-          used?: boolean | null
-          user_id?: string | null
-        }
+          attempts?: number | null;
+          code: string;
+          created_at?: string | null;
+          email: string;
+          expires_at?: string | null;
+          id?: string;
+          used?: boolean | null;
+          user_id?: string | null;
+        };
         Update: {
-          attempts?: number | null
-          code?: string
-          created_at?: string | null
-          email?: string
-          expires_at?: string | null
-          id?: string
-          used?: boolean | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-    }
+          attempts?: number | null;
+          code?: string;
+          created_at?: string | null;
+          email?: string;
+          expires_at?: string | null;
+          id?: string;
+          used?: boolean | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      usuarios: {
+        Row: {
+          id: string;
+          nome: string;
+          especialidade: string | null;
+          email: string;
+          telefone: string | null;
+          registro_profissional: string | null;
+          created_at: string;
+          updated_at: string;
+          photo_url: string | null; // Nova coluna
+        };
+        Insert: {
+          id: string;
+          nome: string;
+          especialidade?: string | null;
+          email: string;
+          telefone?: string | null;
+          registro_profissional?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          photo_url?: string | null; // Nova coluna
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          especialidade?: string | null;
+          email?: string;
+          telefone?: string | null;
+          registro_profissional?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          photo_url?: string | null; // Nova coluna
+        };
+        Relationships: [
+          {
+            foreignKeyName: "usuarios_id_fkey";
+            columns: ["id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 

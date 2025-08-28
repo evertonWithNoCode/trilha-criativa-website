@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import HelpButton from "@/components/HelpButton";
-import { BackgroundDecoration } from "@/components/BackgroundDecoration";
+import { BackgroundConfirmEmail } from "@/components/BackgroundConfirmEmail";
 
 export default function VerifyEmail() {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
@@ -12,7 +12,7 @@ export default function VerifyEmail() {
   const navigate = useNavigate();
   const location = useLocation();
   const { verifyOtp, resendOtp } = useAuth();
-  
+
   // Get email from navigation state
   const email = location.state?.email || "seu-email@email.com";
 
@@ -21,7 +21,7 @@ export default function VerifyEmail() {
       const newCode = [...code];
       newCode[index] = value;
       setCode(newCode);
-      
+
       // Auto focus next input
       if (value && index < 5) {
         const nextInput = document.getElementById(`code-input-${index + 1}`);
@@ -44,7 +44,7 @@ export default function VerifyEmail() {
 
   const handleVerifyCode = async (verificationCode?: string) => {
     const codeToVerify = verificationCode || code.join("");
-    
+
     if (codeToVerify.length !== 6) {
       toast.error("Por favor, digite o código completo");
       return;
@@ -54,7 +54,7 @@ export default function VerifyEmail() {
 
     try {
       const { error } = await verifyOtp(email, codeToVerify);
-      
+
       if (error) {
         toast.error("Código inválido ou expirado");
         // Clear the code inputs
@@ -75,10 +75,10 @@ export default function VerifyEmail() {
 
   const handleResendCode = async () => {
     setResending(true);
-    
+
     try {
       const { error } = await resendOtp(email);
-      
+
       if (error) {
         toast.error("Erro ao reenviar código");
       } else {
@@ -104,19 +104,19 @@ export default function VerifyEmail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted relative overflow-hidden">
-      <BackgroundDecoration />
-      
+      <BackgroundConfirmEmail />
+
       {/* Logo */}
       <div className="absolute top-8 left-8 md:top-10 md:left-10">
-        <img 
-          src="https://api.builder.io/api/v1/image/assets/TEMP/09b8c8b2251ba50585cbbd8ee69d204f9ad06348?width=240" 
-          alt="Logo" 
+        <img
+          src="https://api.builder.io/api/v1/image/assets/TEMP/09b8c8b2251ba50585cbbd8ee69d204f9ad06348?width=240"
+          alt="Logo"
           className="w-24 h-auto md:w-32"
         />
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8">
+      <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
         <div className="max-w-lg w-full text-center space-y-6 md:space-y-8">
           {/* Title */}
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
@@ -141,8 +141,8 @@ export default function VerifyEmail() {
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 disabled={loading}
                 className="w-12 h-16 md:w-16 md:h-20 lg:w-18 lg:h-20 text-center text-xl md:text-2xl font-semibold 
-                          border-2 border-border rounded-2xl md:rounded-3xl bg-background
-                          focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary
+                          border-2 border-[#F9DFAF] border-border rounded-2xl md:rounded-3xl bg-background
+                          focus:outline-none focus:ring-2 focus:ring-[#c79e53] focus:border-[#F9DFAF]
                           shadow-[0_3px_0_0_hsl(var(--muted))] transition-all duration-200
                           hover:shadow-[0_4px_0_0_hsl(var(--muted))] hover:translate-y-[-1px]
                           disabled:opacity-50 disabled:cursor-not-allowed"
@@ -164,28 +164,29 @@ export default function VerifyEmail() {
             </button>
           )}
 
-          {/* Resend Button */}
-          <div className="mt-8 md:mt-12">
-            <button
-              onClick={handleResendCode}
-              disabled={resending}
-              className="w-full max-w-md mx-auto bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold py-3 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {resending ? "Reenviando..." : "Reenviar código de verificação"}
-            </button>
-          </div>
-
-          {/* Login Link */}
-          <div className="mt-6 md:mt-8">
-            <p className="text-sm md:text-base text-muted-foreground">
-              Você já possui cadastro?{" "}
+          <div className="pt-20">
+            {/* Resend Button */}
+            <div className="mt-8 md:mt-12">
               <button
-                onClick={handleLoginClick}
-                className="text-primary font-bold hover:text-primary/80 transition-colors duration-200"
+                onClick={handleResendCode}
+                disabled={resending}
+                className="w-full max-w-md mx-auto bg-[#FCE699] hover:bg-[#FCE699]/90 text-secondary-foreground font-bold py-3 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Faça login
+                {resending ? "Reenviando..." : "Reenviar código de verificação"}
               </button>
-            </p>
+            </div>
+            {/* Login Link */}
+            <div className="mt-6 md:mt-8">
+              <p className="text-sm md:text-base text-muted-foreground">
+                Você já possui cadastro?{" "}
+                <button
+                  onClick={handleLoginClick}
+                  className="text-[#EDA63B] font-bold hover:text-primary/80 transition-colors duration-200"
+                >
+                  Faça login
+                </button>
+              </p>
+            </div>
           </div>
         </div>
       </div>

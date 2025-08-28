@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 interface SignupFormData {
   name: string;
@@ -32,39 +33,67 @@ export const SignupForm: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      toast.error('As senhas não coincidem');
-      return;
-    }
+  e.preventDefault();
+  
+  if (formData.password !== formData.confirmPassword) {
+    toast.error('As senhas não coincidem');
+    return;
+  }
 
-    if (!formData.acceptTerms) {
-      toast.error('Você deve aceitar os termos e condições');
-      return;
-    }
+  if (!formData.acceptTerms) {
+    toast.error('Você deve aceitar os termos e condições');
+    return;
+  }
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const { error } = await signUp(formData.email, formData.password);
-      
-      if (error) {
-        if (error.message.includes('User already registered')) {
-          toast.error('Este email já está cadastrado');
-        } else {
-          toast.error('Erro ao criar conta: ' + error.message);
-        }
+  try {
+    // 1. Cria usuário no Auth
+    const { data: signUpData, error: signUpError } = await signUp(formData.email, formData.password);
+
+    if (signUpError) {
+      if (signUpError.message.includes('User already registered')) {
+        toast.error('Este email já está cadastrado');
       } else {
-        toast.success('Conta criada com sucesso! Verifique seu email para confirmar.');
-        navigate('/verify-email', { state: { email: formData.email } });
+        toast.error('Erro ao criar conta: ' + signUpError.message);
       }
-    } catch (error) {
-      toast.error('Erro inesperado ao criar conta');
-    } finally {
       setLoading(false);
+      return;
     }
-  };
+
+    const user = signUpData.user;
+    if (!user) throw new Error('Usuário não retornado pelo Supabase');
+
+    // 2. Cria registro na tabela public.usuarios
+    const { error: insertError } = await supabase
+      .from('usuarios')
+      .insert([
+        {
+          id: user.id,
+          nome: formData.name,
+          email: formData.email,
+          especialidade: '', // pode deixar vazio ou adicionar campo no formulário
+          telefone: '',      // idem
+          registro_profissional: '' // idem
+        }
+      ]);
+
+    if (insertError) {
+      toast.error('Erro ao criar registro no banco: ' + insertError.message);
+      setLoading(false);
+      return;
+    }
+
+    toast.success('Conta criada com sucesso! Verifique seu email para confirmar.');
+    navigate('/verify-email', { state: { email: formData.email } });
+
+  } catch (error) {
+    console.error(error);
+    toast.error('Erro inesperado ao criar conta');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <form
