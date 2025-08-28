@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import VerifyEmail from "./pages/VerifyEmail";
 import NotFound from "./pages/NotFound";
 import { AccountPage } from "./pages/AccountPage";
+import { PatientDashboard } from "./pages/Pacientes";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const AppRoutes = () => (
     <Route path="/verify-email" element={<PublicRoute><VerifyEmail /></PublicRoute>} />
     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
     <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
+    <Route path="/pacientes" element={<ProtectedRoute><PatientDashboard /></ProtectedRoute>} />
     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
     <Route path="*" element={<NotFound />} />
   </Routes>
