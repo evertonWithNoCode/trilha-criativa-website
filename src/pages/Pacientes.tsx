@@ -56,19 +56,11 @@ export const PatientDashboard: React.FC = () => {
   }, [searchQuery, ageFilter]);
 
   return (
-    <div className="w-full min-h-screen bg-white relative">
-      {/* Backgrounds */}
-      <div className="absolute w-full h-[300px] bg-[#FFFCF2] rounded-b-2xl top-0" />
-      <div className="absolute w-full top-[250px] bottom-0 bg-[#FEF2CC] rounded-t-2xl" />
-
-      {/* Sidebar */}
+    <div className="w-full flex min-h-screen  bg-[#ffffff]">
       <AppSidebar />
       <HelpButton />
-
-      {/* Content */}
-      <main className="relative z-10 px-4 sm:px-8 md:px-16 lg:px-32 py-10">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+      <div className='bg-[#FFFCF2] w-full'>
+        <header className="flex sm:flex-row sm:items-center sm:justify-between gap-4 mb-10 md:pl-[60px] mt-[80px] pl-[40px] md:pl-[20px] md:mt-[50px] md:mr-[100px]">
           <div>
             <h1 className="text-[#2C2623] text-3xl sm:text-4xl lg:text-5xl font-extrabold">
               Pacientes
@@ -79,35 +71,47 @@ export const PatientDashboard: React.FC = () => {
           </div>
           <button
             onClick={() => console.log('Novo paciente')}
-            className="bg-[#FCE699] px-5 py-2 rounded-xl text-sm font-extrabold text-[#2C2623] hover:bg-[#F7B34D] transition"
+            className="bg-[#FCE699] h-[50px] md:h-[40px] px-5 rounded-xl text-sm font-extrabold text-[#2C2623] hover:bg-[#F7B34D]  transition"
           >
             Cadastrar paciente
           </button>
+
         </header>
-
-        {/* Search + Filter */}
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-10">
+        <div className="flex flex-col mb-10 sm:flex-row gap-4 items-start sm:items-center justify-between pl-[40px] md:mr-[100px] pl-[60px]">
           <SearchInput onSearch={setSearchQuery} />
-          <FilterDropdown onFilterChange={setAgeFilter} className="hidden sm:block" />
+          <FilterDropdown onFilterChange={setAgeFilter} className=" sm:block" />
         </div>
+        <main className="w-[100%]  bg-[#FEF2CC]">
 
-        {/* Patients Grid */}
-        <section className=' flex justify-center mt-20'>
-          <div className="grid grid-cols-[repeat(3,336px)] gap-10 max-lg:grid-cols-[repeat(2,336px)] max-md:grid-cols-1 max-sm:grid-cols-1">
-            {filteredPatients.map(patient => (
-              <PatientCard key={patient.id} patient={patient} onViewPatient={id => console.log(id)} />
-            ))}
-          </div>
-
-          {filteredPatients.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-[#2C2623] text-lg font-medium">
-                Nenhum paciente encontrado.
-              </p>
+          <section className=' flex justify-center '>
+            <div className="
+  grid 
+  gap-10 
+  mt-[60px]
+  grid-cols-1            /* padrão: mobile = 1 coluna */
+  md:grid-cols-2         /* >=768px = 2 colunas */
+  lg:grid-cols-3         /* >=1024px = 3 colunas */
+">
+              {filteredPatients.map(patient => (
+                <PatientCard key={patient.id} patient={patient} onViewPatient={id => console.log(id)} />
+              ))}
             </div>
-          )}
-        </section>
-      </main>
+
+            {filteredPatients.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-[#2C2623] text-lg font-medium">
+                  Nenhum paciente encontrado.
+                </p>
+              </div>
+            )}
+          </section>
+        </main>
+      </div>
+
+
+
+
+
     </div>
   );
 };

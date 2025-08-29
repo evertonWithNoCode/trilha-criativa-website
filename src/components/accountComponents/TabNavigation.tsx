@@ -20,7 +20,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({ className = "" }) 
   ];
 
   return (
-    <div className={`flex absolute left-[252px] top-56 max-md:flex-wrap gap-4 max-md:gap-2 max-md:left-8 max-md:top-[180px] max-sm:overflow-x-auto max-sm:flex-nowrap max-sm:gap-1 max-sm:left-6 max-sm:top-[130px] ${className}`} role="tablist">
+    <div className={`flex    gap-4 max-md:gap-2 max-md:left-8 max-md:top-[180px] max-sm:overflow-x-auto max-sm:flex-nowrap max-sm:gap-1 max-sm:left-6 max-sm:top-[130px] ${className}`} role="tablist">
       {tabs.map((tab) => (
         <button
           key={tab.id}

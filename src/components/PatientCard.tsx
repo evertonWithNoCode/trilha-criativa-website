@@ -35,7 +35,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onViewPatient
         </div>
       </header>
       
-      <div className="flex w-72 flex-col items-start gap-6">
+      <div className="flex w-72 flex-col items-start gap-6 sm:pl-0 pl-2" >
         <div className="flex items-center gap-2">
           <div>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

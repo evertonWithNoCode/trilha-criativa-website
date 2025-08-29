@@ -10,33 +10,32 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export function AccountPage() {
   return (
-    <main className="w-[100%] h-[1044px] relative bg-[#FEF2CC] max-md:w-full max-md:h-auto max-md:min-h-screen max-sm:p-0 overflow-x-hidden overflow-h-hidden">
-      {/* Background sections */}
-      <div className="w-[100%] h-[405px] absolute bg-[#FFFCF2] rounded-[20px]  max-md:w-[calc(100%_-_32px)] max-md:h-[300px] max-md:left-4 max-md:top-5 max-sm:w-[calc(100%_-_16px)] max-sm:h-[250px] max-sm:left-2 max-sm:top-2.5 overflow-x-hidden " />
-      <div className="w-[100%] h-[300px] absolute bg-[#FEF2CC] rounded-[0_0_20px_20px]  top-72 max-md:w-[calc(100%_-_32px)] max-md:h-auto max-md:min-h-[600px] max-md:left-4 max-md:top-[200px] max-sm:w-[calc(100%_-_16px)] max-sm:left-2 max-sm:top-[150px] overflow-x-hidden" />
-      
-      {/* Page header */}
-      <header>
-        <h1 className="w-[600px] text-[#2C2623] text-5xl font-extrabold leading-[56px] tracking-[-0.48px] absolute h-14 left-[252px] top-[58px] max-md:text-4xl max-md:leading-[44px] max-md:w-[calc(100%_-_64px)] max-md:left-8 max-md:top-[60px] max-sm:text-[28px] max-sm:leading-9 max-sm:w-[calc(100%_-_48px)] max-sm:left-6 max-sm:top-10">
-          Conta
-        </h1>
-        <p className="w-[688px] text-[#2C2623] text-lg font-normal leading-6 tracking-[0.18px] absolute h-6 left-[252px] top-[152px] max-md:w-[calc(100%_-_64px)] max-md:left-8 max-md:top-[120px] max-sm:w-[calc(100%_-_48px)] max-sm:text-base max-sm:left-6 max-sm:top-[90px]">
-          Gerencie seus dados pessoais e preferências.
-        </p>
-      </header>
-
-      {/* Sidebar navigation */}
+    <main className="w-full  min-h-screen bg-[#FFFCF2] flex">
       <AppSidebar />
-      
-      {/* Tab navigation */}
-      <TabNavigation />
-      
-      {/* Profile section */}
-      <ProfileHeader />
-      
-      {/* Personal information form */}
-      <PersonalInfoForm />
-      
+
+      <div className="flex-col w-full">
+        <header className=" pt-[80px] pl-4 sm:pl-8 md:pl-[60px] lg:pl-[100px] xl:pl-[145px] pb-[60px]">
+          <h1 className="w-[600px] text-[#2C2623] text-5xl font-extrabold ">
+            Conta
+          </h1>
+          <p className="">
+            Gerencie seus dados pessoais e preferências.
+          </p>
+        </header>
+        <div className="">
+
+         
+            <TabNavigation className="pl-4 sm:pl-8 md:pl-[60px] lg:pl-[100px] xl:pl-[145px]" />
+            <div className="bg-[#FEF2CC] h-[700px]">
+              <ProfileHeader className="pl-4 sm:pl-8 md:pl-[60px] lg:pl-[100px] xl:pl-[145px]" />
+              <PersonalInfoForm className="pl-4 sm:pl-8 md:pl-[60px] lg:pl-[100px] xl:pl-[145px]" />
+            </div>
+        
+        </div>
+      </div>
+
+
+
       {/* Help button */}
       <HelpButton />
     </main>

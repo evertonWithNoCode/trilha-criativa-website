@@ -54,7 +54,7 @@ export function AppSidebar() {
   return (
     <>
       {/* 🔹 Sidebar para telas grandes */}
-      <div className="hidden md:flex fixed left-0 top-0 h-full w-[112px] bg-white flex-col items-center py-10">
+      <div className="hidden md:flex  left-0 top-0 min-h-[100%] min-w-[112px] bg-white flex-col items-center py-10">
         {/* Logo */}
         <div className="mb-12">
           <img

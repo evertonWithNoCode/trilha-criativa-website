@@ -97,8 +97,8 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ className = 
 
 
   return (
-    <section className={`absolute w-[1040px] h-[276px] left-[252px] top-[608px] max-md:w-[calc(100%_-_64px)] max-md:left-8 max-md:top-[520px] max-sm:w-[calc(100%_-_48px)] max-sm:left-6 max-sm:top-[440px] ${className}`}>
-      <h2 className="text-[#2C2623] text-2xl font-bold leading-8 tracking-[0.24px] opacity-90 absolute w-[248px] h-8 left-0 top-0 max-md:w-[calc(100%_-_64px)] max-sm:w-[calc(100%_-_48px)] max-sm:text-xl">
+    <section className={`${className}`}>
+      <h2 className="text-[#2C2623] text-2xl font-bold leading-8 tracking-[0.24px] mt-[20px]">
         Informações pessoais
       </h2>
       
