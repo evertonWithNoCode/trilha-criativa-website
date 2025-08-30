@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Patient {
   id: string;
@@ -15,6 +16,7 @@ interface PatientCardProps {
 }
 
 export const PatientCard: React.FC<PatientCardProps> = ({ patient, onViewPatient, className = '' }) => {
+  const navigate = useNavigate();
   return (
     <article className={`flex w-[336px] flex-col items-center gap-6 shadow-[0_3px_0_0_#FFE0B2] bg-white pb-6 rounded-3xl border-2 border-solid border-[#FBDEB1] max-sm:w-full ${className}`}>
       <header className="flex w-[336px] items-center gap-5 bg-white pl-2 pr-5 pt-2 pb-0 rounded-[24px_24px_0_0] border-t-2 border-t-[#FBDEB1] border-x-2 border-x-[#FBDEB1] border-solid max-sm:w-full">
@@ -34,7 +36,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onViewPatient
           </div>
         </div>
       </header>
-      
+
       <div className="flex w-72 flex-col items-start gap-6 sm:pl-0 pl-2" >
         <div className="flex items-center gap-2">
           <div>
@@ -53,9 +55,12 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onViewPatient
             {patient.lastSession}
           </span>
         </div>
-        
+
         <button
-          onClick={() => onViewPatient(patient.id)}
+          onClick={() => {
+            onViewPatient(patient.id);
+            navigate('/pacientes/detalhes');
+          }}
           className="flex h-10 justify-center items-center gap-2 bg-[#FCE699] px-5 py-2 rounded-xl hover:bg-[#F7B34D] transition-colors"
         >
           <span className="text-[#2C2623] text-sm font-extrabold leading-5 tracking-[0.14px]">

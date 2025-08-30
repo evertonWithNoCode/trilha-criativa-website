@@ -4,6 +4,7 @@ import { SearchInput } from '@/components/SearchInput';
 import { FilterDropdown } from '@/components/FilterDropdown';
 import { PatientCard } from '@/components/PatientCard';
 import HelpButton from '@/components/HelpButton';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Patient {
   id: string;
@@ -28,6 +29,7 @@ const mockPatients: Patient[] = [
 export const PatientDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [ageFilter, setAgeFilter] = useState('Todas as idades');
+  const navigate = useNavigate();
 
   const filteredPatients = useMemo(() => {
     let filtered = mockPatients;

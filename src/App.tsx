@@ -11,6 +11,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import NotFound from "./pages/NotFound";
 import { AccountPage } from "./pages/AccountPage";
 import { PatientDashboard } from "./pages/Pacientes";
+import PacienteDetalhes from "@/pages/pacientePage"
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const AppRoutes = () => (
     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
     <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
     <Route path="/pacientes" element={<ProtectedRoute><PatientDashboard /></ProtectedRoute>} />
+    <Route path="/pacientes/detalhes" element={<ProtectedRoute><PacienteDetalhes /></ProtectedRoute>} />
     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
     <Route path="*" element={<NotFound />} />
   </Routes>
