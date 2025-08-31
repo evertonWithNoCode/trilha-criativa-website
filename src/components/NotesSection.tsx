@@ -1,105 +1,80 @@
-import React, { useState } from 'react';
+import React from "react";
+import { Avatar } from "@/components/ui/avatar"; // se não tiver, pode trocar por <img />
+import { Button } from "@/components/ui/button";
 
 interface Note {
-  id: string;
-  content: string;
-  timestamp: string;
-  avatar: string;
+  id: number;
+  text: string;
+  date: string;
 }
 
-interface NotesSectionProps {
-  notes?: Note[];
-  onAddNote?: (content: string) => void;
-}
+const notes: Note[] = [
+  {
+    id: 1,
+    text: "Progresso excelente em jogos visuais. Mostra maior interesse em atividades colaborativas. Demonstra melhora significativa na concentração e tempo de atenção.",
+    date: "Há 1 semana atrás",
+  },
+  {
+    id: 2,
+    text: "Excelente para trabalhar memória. Meus pacientes adoram!",
+    date: "Há 1 semana atrás",
+  },
+];
 
-export const NotesSection: React.FC<NotesSectionProps> = ({ notes, onAddNote }) => {
-  const [noteContent, setNoteContent] = useState('');
-
-  const defaultNotes: Note[] = [
-    {
-      id: '1',
-      content: 'Progresso excelente em jogos visuais. Mostra maior interesse em atividades colaborativas. Demonstra melhora significativa na concentração e tempo de atenção.',
-      timestamp: 'Há 1 semana atrás',
-      avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/ca7f8883f98949dc5843cac8c53ac749ea844887?width=96'
-    },
-    {
-      id: '2',
-      content: 'Excelente para trabalhar memória. Meus pacientes adoram!',
-      timestamp: 'Há 1 semana atrás',
-      avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/ca7f8883f98949dc5843cac8c53ac749ea844887?width=96'
-    }
-  ];
-
-  const notesList = notes || defaultNotes;
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (noteContent.trim() && onAddNote) {
-      onAddNote(noteContent.trim());
-      setNoteContent('');
-    }
-  };
-
+export default function NotesSection() {
   return (
-    <section className="relative">
-      <h2 className="text-[#2C2623] text-2xl font-extrabold leading-8 tracking-[0.24px] opacity-90 absolute w-[239px] h-8 left-[108px] top-[1920px]">
-        Notas e observações
-      </h2>
-      
-      <div className="w-[1256px] h-0 absolute bg-[#FCE699] left-0 top-[1856px]" />
-      
-      <form onSubmit={handleSubmit} className="w-[1040px] h-24 shrink-0 absolute left-[108px] top-[1976px]">
-        <div className="w-[1040px] h-24 shrink-0 absolute bg-white rounded-[20px] left-0 top-0" />
+    <div>
+      <div className="border border-[#F9EECF] mt-4" />
+      <div className="bg-[#FFFCF5] w-[1040px]  p-6 pb-10 mx-auto">
         
-        <div className="flex w-[801px] h-12 items-center gap-2 shrink-0 absolute bg-[#FEF9E5] p-4 rounded-2xl left-[95px] top-6">
-          <div className="flex items-center gap-2 flex-[1_0_0] relative">
-            <input
-              type="text"
-              value={noteContent}
-              onChange={(e) => setNoteContent(e.target.value)}
-              placeholder="Adicione notas sobre seu paciente"
-              className="text-[#BB9205] text-base font-medium leading-5 tracking-[0.16px] relative bg-transparent border-none outline-none flex-1 placeholder:text-[#BB9205]"
-              aria-label="Campo para adicionar notas sobre o paciente"
+        {/* Título */}
+        <h2 className="text-xl font-bold text-[#3A3A3A] mb-4">
+          Notas e observações
+        </h2>
+        {/* Campo de input */}
+        <div className="flex items-center gap-3 bg-white rounded-xl p-3 shadow-sm w-full ">
+          <Avatar className="w-8 h-8 rounded-full">
+            <img
+              src="https://randomuser.me/api/portraits/women/44.jpg"
+              alt="avatar"
+              className="rounded-full"
             />
-          </div>
-        </div>
-        
-        <button
-          type="submit"
-          className="inline-flex h-10 justify-center items-center gap-2 shrink-0 absolute w-24 bg-[#FCE699] px-5 py-2 rounded-xl left-[912px] top-7 hover:bg-[#F7B34D] transition-colors"
-          disabled={!noteContent.trim()}
-        >
-          <span className="text-[#2C2623] text-sm font-extrabold leading-5 tracking-[0.14px] relative">
+          </Avatar>
+          <input
+            type="text"
+            placeholder="Adicione notas sobre seu paciente"
+            className="flex-1 bg-[#FFF9EC] rounded-xl px-4 py-2 text-sm text-[#6B6B6B] outline-none"
+          />
+          <Button className="bg-[#FCE699] text-gray-800 font-medium px-4 py-1 rounded-xl hover:bg-[#e2b43b]">
             Publicar
-          </span>
-        </button>
-        
-        <div className="w-6 h-6 shrink-0 absolute left-[84px] top-9">
-          <div className="w-[17px] h-[17px] shrink-0 absolute bg-[#FEF9E5] rounded-sm left-0 top-0" />
+          </Button>
         </div>
-        
-        <img
-          src="https://api.builder.io/api/v1/image/assets/TEMP/ca7f8883f98949dc5843cac8c53ac749ea844887?width=96"
-          alt="Avatar do usuário"
-          className="w-12 h-12 shrink-0 absolute rounded-[20px] left-6 top-6"
-        />
-      </form>
-
-      <div className="w-[1040px] h-[200px] shrink-0 absolute left-[108px] top-[2120px]">
-        <div className="w-[1040px] h-0 absolute bg-[#FCE699] left-0 top-28" />
-        
-        {notesList.map((note, index) => (
-          <article key={note.id} className={`absolute ${index === 0 ? 'top-px' : 'top-[152px]'}`}>
-            <p className="w-[664px] text-[#2C2623] text-lg font-medium leading-6 tracking-[0.18px] absolute h-[72px] left-28 top-0">
-              {note.content}
-            </p>
-            <time className="w-40 text-[#2C2623] text-base font-medium leading-5 tracking-[0.16px] absolute h-5 left-[880px] top-1">
-              {note.timestamp}
-            </time>
-            <div className="w-12 h-12 shrink-0 absolute bg-[#FBDEB1] rounded-[20px] left-6 top-0" />
-          </article>
-        ))}
+        {/* Lista de notas */}
+        <div className="mt-6 ">
+          {notes.map((note, index) => (
+            <div key={note.id} className="pt-2 pb-2">
+              <div className="flex items-start gap-3">
+                {/* Bolinha */}
+                <div className="w-8 h-8 rounded-full bg-[#F9DFAF]" />
+                {/* Conteúdo */}
+                <div className="flex-1 ">
+                  <p className="text-sm text-[#3A3A3A] leading-relaxed">
+                    {note.text}
+                  </p>
+                </div>
+                {/* Data */}
+                <span className="text-xs text-[#6B6B6B] whitespace-nowrap">
+                  {note.date}
+                </span>
+              </div>
+              {/* Divider */}
+              {index !== notes.length - 1 && (
+                <div className="border-t border-[#F9EECF] mt-4" />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+    </div>
   );
-};
+}

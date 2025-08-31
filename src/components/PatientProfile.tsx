@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface PatientProfileProps {
   name: string;
@@ -17,10 +18,11 @@ export const PatientProfile: React.FC<PatientProfileProps> = ({
   onDownload,
   onPlay
 }) => {
+   const navigate = useNavigate();
   return (
     <section className="flex w-[90%] mx-auto flex-col justify-center items-center pt-10">
       <div className='flex justify-between w-full'>
-        <header className="flex items-center  gap-3 ">
+        <header className="flex items-center  gap-3 h-[40px] cursor-pointer" onClick={() => navigate('/pacientes')}>
           <button
             className="flex items-center justify-center"
             aria-label="Voltar para lista de pacientes"

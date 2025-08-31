@@ -24,7 +24,7 @@ const colors = ["#F6C544", "#F6C544", "#F6C544", "#F6C544", "#F6C544", "#F89C2C"
 export default function PerformanceChart() {
   const [selectedPeriod, setSelectedPeriod] = React.useState('6');
   return (
-    <div className="w-full h-[600px] bg-[#FFF5DA] rounded-xl pl-20 pt-10 pb-10 pr-20">
+    <div className="w-full h-[600px] bg-[#FFF5DA] rounded-xl pl-80 pt-10 pb-10 pr-80">
       <div className="flex justify-between items-center mb-6 ">
         <h2 className="text-2xl font-bold text-gray-800">Evolução do desempenho</h2>
         <div className="flex items-center gap-3">

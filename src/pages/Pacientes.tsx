@@ -72,7 +72,7 @@ export const PatientDashboard: React.FC = () => {
             </p>
           </div>
           <button
-            onClick={() => console.log('Novo paciente')}
+            onClick={() => navigate('/pacientes/cadastro')}
             className="bg-[#FCE699] h-[50px] md:h-[40px] px-5 rounded-xl text-sm font-extrabold text-[#2C2623] hover:bg-[#F7B34D]  transition"
           >
             Cadastrar paciente

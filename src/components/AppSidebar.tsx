@@ -52,9 +52,9 @@ export function AppSidebar() {
   }, [user]);
 
   return (
-    <>
+    <div className='min-h-[100%] bg-white'>
       {/* 🔹 Sidebar para telas grandes */}
-      <div className="hidden md:flex  left-0 top-0 min-h-[100%] min-w-[112px] bg-white flex-col items-center py-10">
+      <div className="hidden md:flex  min-w-[112px] bg-white flex-col items-center py-10">
         {/* Logo */}
         <div className="mb-12">
           <img
@@ -97,7 +97,7 @@ export function AppSidebar() {
         </div>
 
         {/* Rodapé */}
-        <div className="pb-40 flex flex-col gap-4">
+        <div className="pb-40 flex flex-col gap-4 pt-20">
           <button className="w-16 h-16 border-2 border-yellow-200 rounded-[28px] bg-white flex items-center justify-center p-4 shadow-sm">
             <img src="/iconBell.png" alt="Notificações" className="w-8 h-8" />
           </button>
@@ -185,6 +185,6 @@ export function AppSidebar() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
