@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import  PersonalInfoForm  from './PersonalInfoForm';
 import  TeamPage  from './TeamPage';
+import SubscriptionPage from './SubscriptionPage';
 
 interface Tab {
   id: string;
@@ -49,7 +50,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({ className = "" }) 
       <div className="">
         {activeTab === 'pessoal' && <PersonalInfoForm />}
         {activeTab === 'equipe' && <TeamPage />}
-        {activeTab === 'assinatura' && <div>Conteúdo da Assinatura</div>}
+        {activeTab === 'assinatura' && <div><SubscriptionPage/></div>}
       </div>
     </div>
   );
