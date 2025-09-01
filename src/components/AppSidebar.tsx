@@ -22,6 +22,7 @@ export function AppSidebar() {
   // Verifica se a rota atual é "/account"
   const isAccountPage = location.pathname === '/account';
    const isAccountPageinPacientes = location.pathname === '/pacientes';
+   const isHomePage = location.pathname === '/dashboard';
 
   // Busca a photo_url do usuário
   useEffect(() => {
@@ -66,7 +67,14 @@ export function AppSidebar() {
 
         {/* Menu principal */}
         <div className="flex flex-col items-center gap-3 flex-1">
-          <button className="w-16 h-16 rounded-full bg-white flex items-center justify-center p-4 shadow-sm">
+          <button 
+           onClick={() => navigate('/dashboard')}
+            className={`w-16 h-16 rounded-[28px] flex items-center justify-center p-4 shadow-sm transition-colors
+              ${
+                isHomePage
+                  ? 'bg-[#FFFCF2] border-2 border-yellow-200'
+                  : 'bg-white border-2 border-transparent'
+              }`}>
             <img src="/iconHome.png" alt="Home" className="w-8 h-8" />
           </button>
           <button 

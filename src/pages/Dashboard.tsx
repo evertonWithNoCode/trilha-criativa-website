@@ -1,132 +1,170 @@
+import React from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import { AppSidebar } from "@/components/AppSideBar";
+
 const Dashboard: React.FC = () => {
-  // ================= HEADER =================
-  const Header = () => (
-    <header className="flex items-start justify-between relative z-[1] pt-12 pb-0 px-[252px] max-md:flex-col max-md:gap-6 max-md:pt-6 max-md:pb-0 max-md:px-8 max-sm:pt-4 max-sm:pb-0 max-sm:px-5">
-     
-      <div className="flex-1">
-        <h1 className="text-[#2C2623] text-5xl font-extrabold leading-[56px] tracking-[-0.48px] mb-2 max-sm:text-[32px] max-sm:leading-10">
-          Olá, Maria!
-        </h1>
-        <p className="text-[#2C2623] text-lg font-medium leading-6 tracking-[0.18px] max-sm:text-base">
-          Acompanhe o progresso dos seus pacientes
-        </p>
-      </div>
-      <div className="flex items-center justify-between w-[336px] h-14 bg-[#FFFCF2] ml-auto p-4 rounded-2xl border-2 border-solid border-[#FEF2CC] max-md:w-full max-sm:h-auto max-sm:p-3">
-        <div>
-          {/* Ícone raio */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14.2495 2H8.49395..."></path></svg>
-        </div>
-        <div className="text-[#2C2623] text-base font-extrabold leading-5 tracking-[0.16px] flex-1">
-          Últimos 3 dias de teste
-        </div>
-        <div>
-          {/* Chevron */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#F7B34D" strokeWidth="2"></path></svg>
-        </div>
-      </div>
-    </header>
-  );
-
-  // ================= ACTION BUTTONS =================
-  const ActionButtons = () => {
-  const buttons = [
-    { text: 'Iniciar sessão', bgColor: 'bg-[#CCEDEF]', icon: '/iconStreaming.png' },
-    { text: 'Adicionar paciente', bgColor: 'bg-[#D7F0DF]', icon: '/iconSmile.png' },
-    { text: 'Gerar relatório', bgColor: 'bg-[#FAD2E1]', icon: '/iconGraph.png' },
-    { text: 'Ver conquistas', bgColor: 'bg-[#FEF2CC]', icon: '/iconMedal.png' },
-  ];
-
   return (
-    <section className="flex gap-4 relative z-[1] mt-9 px-[252px] max-md:flex-wrap max-md:px-8 max-sm:flex-col max-sm:px-5">
-      {buttons.map((btn, i) => (
-        <button
-          key={i}
-          className="flex items-center w-[248px] h-16 shadow-[0_3px_0_0_#FEF2CC] gap-3 bg-white pl-2 pr-5 py-2 rounded-[20px] border-2 border-solid border-[#FEF2CC] hover:shadow-[0_5px_0_0_#FEF2CC]"
-        >
-          {/* Ícone */}
-          <div className={`w-10 h-10 flex items-center justify-center ${btn.bgColor} rounded-xl`}>
-            <img src={btn.icon} alt={btn.text} className="w-6 h-6" />
+    <div className="flex w-full min-h-screen">
+      <AppSidebar />
+
+      <div className=" w-full font-sans text-gray-800 px-4 sm:px-8 md:px-16 lg:px-40">
+        {/* Background */}
+        
+
+        {/* Header */}
+        <header className="pt-12 pb-20 md:pb-40">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold">Olá, Maria!</h1>
+              <p className="text-gray-500 text-base md:text-lg mt-1">
+                Acompanhe o progresso dos seus pacientes
+              </p>
+            </div>
+
+            <button className="flex items-center justify-between w-full sm:w-[336px] h-[56px] px-4 bg-white rounded-2xl border-2 border-[#FBDEB1] font-bold shadow-sm">
+              <div className="flex gap-2 items-center">
+                <img src="/raio.png" alt="iniciar" className="w-6 h-6" />
+                Últimos 3 dias de teste
+              </div>
+              <ChevronRight color="#f5dc81" strokeWidth={3} size={22} />
+            </button>
           </div>
 
-          {/* Texto */}
-          <div className="text-[#2C2623] text-base font-extrabold">{btn.text}</div>
-        </button>
-      ))}
-    </section>
-  );
-};
+          {/* Action Buttons */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <button className="flex items-center gap-3 w-full h-16 bg-white px-4 rounded-2xl border-2 border-[#FEF2CC] shadow-[0_3px_0_0_#FEF2CC] hover:shadow-[0_5px_0_0_#FEF2CC]">
+              <div className="bg-[#CCEDEF] h-10 w-10 rounded-xl flex items-center justify-center">
+                <img src="/iconStreaming.png" alt="iniciar" className="w-5 h-5" />
+              </div>
+              Iniciar sessão
+            </button>
 
-  // ================= STATS CARDS =================
-  const StatsCards = () => {
-    const stats = [
-      { title: 'Pacientes cadastrados', value: '48' },
-      { title: 'Sessões realizadas', value: '56' },
-      { title: 'Média por paciente', value: '7,2' }
-    ];
-    return (
-      <section className="flex gap-4 relative z-[1] mt-24 px-[252px] max-md:flex-col max-md:px-8 max-sm:px-5">
-        {stats.map((s, i) => (
-          <article key={i} className="shadow-[0_3px_0_0_#FFE0B2] bg-white p-6 rounded-3xl border-2 border-solid border-[#FBDEB1]">
-            <div className="flex justify-between items-start mb-14">
-              <h3 className="text-[#2C2623] text-lg font-extrabold">{s.title}</h3>
-              <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full border-4 border-solid border-[#FEF9E5]"></div>
+            <button className="flex items-center gap-3 w-full h-16 bg-white px-4 rounded-2xl border-2 border-[#FEF2CC] shadow-[0_3px_0_0_#FEF2CC] hover:shadow-[0_5px_0_0_#FEF2CC]">
+              <div className="bg-[#D7F0DF] h-10 w-10 rounded-xl flex items-center justify-center">
+                <img src="/iconSmile.png" alt="paciente" className="w-5 h-5" />
+              </div>
+              Adicionar paciente
+            </button>
+
+            <button className="flex items-center gap-3 w-full h-16 bg-white px-4 rounded-2xl border-2 border-[#FEF2CC] shadow-[0_3px_0_0_#FEF2CC] hover:shadow-[0_5px_0_0_#FEF2CC]">
+              <div className="bg-[#FAD2E1] h-10 w-10 rounded-xl flex items-center justify-center">
+                <img src="/iconGraph.png" alt="relatório" className="w-5 h-5" />
+              </div>
+              Gerar relatório
+            </button>
+
+            <button className="flex items-center gap-3 w-full h-16 bg-white px-4 rounded-2xl border-2 border-[#FEF2CC] shadow-[0_3px_0_0_#FEF2CC] hover:shadow-[0_5px_0_0_#FEF2CC]">
+              <div className="bg-[#FEF2CC] h-10 w-10 rounded-xl flex items-center justify-center">
+                <img src="/iconMedal.png" alt="conquistas" className="w-5 h-5" />
+              </div>
+              Ver conquistas
+            </button>
+          </div>
+        </header>
+
+        {/* Stats */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col justify-between p-6 h-[232px] bg-white rounded-3xl border-2 border-[#FBDEB1] shadow-[0_3px_0_0_#FFE0B2]">
+            <div className="flex justify-between">
+              <p className="text-[#2C2623] text-lg font-extrabold">Pacientes cadastrados</p>
+              <div className="w-14 h-14 flex items-center justify-center bg-white rounded-full border-4 border-[#FEF9E5]">
+                <img src="/face-smile.png" alt="pacientes" className="w-8 h-8" />
+              </div>
             </div>
-            <div className="text-[#2C2623] text-[64px] font-extrabold">{s.value}</div>
-          </article>
-        ))}
-      </section>
-    );
-  };
+            <p className="text-[#2C2623] text-5xl md:text-7xl font-extrabold">48</p>
+          </div>
 
-  // ================= RECENT SESSIONS =================
-  const RecentSessions = () => {
-    const sessions = [
-      { name: 'Ana Alice', sessions: 11, performance: 'Excelente' },
-      { name: 'Théo Santos', sessions: 6, performance: 'Bom' },
-      { name: 'João Pedro', sessions: 5, performance: 'Regular' }
-    ];
-    return (
-      <section className="mt-12 px-[252px] max-md:px-8 max-sm:px-5">
-        <h2 className="text-[#2C2623] text-2xl font-extrabold mb-6">Últimas sessões</h2>
-        <div className="flex gap-4 max-md:flex-col">
-          {sessions.map((s, i) => (
-            <article key={i} className="flex w-[336px] h-24 items-center gap-5 shadow-[0_3px_0_0_#FFE0B2] bg-white p-2 rounded-3xl border-2 border-solid border-[#FBDEB1]">
-              <div className="w-20 h-20 bg-gray-200 rounded-2xl"></div>
-              <div className="flex flex-col justify-between flex-1">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-[#2C2623] text-lg font-extrabold">{s.name}</h3>
-                  <span className="text-sm font-bold bg-white px-2 py-0.5 rounded-full border border-[#E8E5E3]">{s.sessions}</span>
+          <div className="flex flex-col justify-between p-6 h-[232px] bg-white rounded-3xl border-2 border-[#FBDEB1] shadow-[0_3px_0_0_#FFE0B2]">
+            <div className="flex justify-between">
+              <p className="text-[#2C2623] text-lg font-extrabold">Sessões realizadas</p>
+              <div className="w-14 h-14 flex items-center justify-center bg-white rounded-full border-4 border-[#FEF9E5]">
+                <img src="/calendar.png" alt="sessões" className="w-8 h-8" />
+              </div>
+            </div>
+            <p className="text-[#2C2623] text-4xl md:text-6xl font-extrabold">56</p>
+          </div>
+
+          <div className="flex flex-col justify-between p-6 h-[232px] bg-white rounded-3xl border-2 border-[#FBDEB1] shadow-[0_3px_0_0_#FFE0B2]">
+            <div className="flex justify-between">
+              <p className="text-[#2C2623] text-lg font-extrabold">Média por paciente</p>
+              <div className="w-14 h-14 flex items-center justify-center bg-white rounded-full border-4 border-[#FEF9E5]">
+                <img src="/chart.png" alt="média" className="w-8 h-8" />
+              </div>
+            </div>
+            <p className="text-[#2C2623] text-4xl md:text-6xl font-extrabold">7,2</p>
+          </div>
+        </section>
+
+        {/* Últimas sessões */}
+        <section className="mt-10">
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
+            <h2 className="text-[#2C2623] text-2xl font-extrabold">Últimas sessões</h2>
+            <div className="flex gap-2 self-end">
+              <button className="bg-[#FCE699] flex justify-center items-center h-10 w-10 rounded-full shadow-sm">
+                <ChevronLeft size={20} />
+              </button>
+              <button className="bg-[#FCE699] flex justify-center items-center h-10 w-10 rounded-full shadow-sm">
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center gap-4 overflow-x-auto pb-2">
+            <div className="flex min-w-[280px] sm:min-w-[336px] h-24 items-center gap-5 bg-white p-4 rounded-3xl border-2 border-[#FBDEB1] shadow-[0_3px_0_0_#FFE0B2]">
+              <div className="w-16 h-16 flex justify-center items-center">
+                <img src="/ana.png" alt="Ana" className="w-10 h-10 rounded-full" />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <div className="flex justify-between">
+                  <p className="text-[#2C2623] text-lg font-extrabold">Ana Alice</p>
+                  <span className="text-sm font-bold bg-white px-2 py-0.5 rounded-full border border-[#E8E5E3]">
+                    11
+                  </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-base font-bold">{s.performance}</span>
+                <div className="flex justify-between">
+                  <span className="text-green-600 text-sm font-medium">Excelente</span>
+                  <ChevronRight size={18} />
                 </div>
               </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    );
-  };
+            </div>
+          </div>
+        </section>
 
-  // ================= POPULAR GAMES =================
-  const PopularGames = () => (
-    <section className="mt-12 px-[252px] max-md:px-8 max-sm:px-5">
-      <h2 className="text-[#2C2623] text-2xl font-extrabold mb-6">Jogos populares</h2>
-      <div className="flex gap-4">
-        <div className="w-40 h-40 bg-[#FAD2E1] flex items-center justify-center rounded-3xl">🎮</div>
-        <div className="w-40 h-40 bg-[#CCEDEF] flex items-center justify-center rounded-3xl">🧠</div>
+        {/* Jogos mais populares */}
+        <section className="mt-10 mb-12">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <h2 className="text-[#2C2623] text-2xl font-extrabold">Jogos mais populares</h2>
+            <button className="w-full sm:w-[115px] h-10 text-sm font-bold text-gray-600 bg-[#FCE699] px-4 rounded-xl">
+              Ver galeria
+            </button>
+          </div>
+
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <div className="flex items-center justify-center w-full max-w-[160px] aspect-square bg-white p-6 rounded-3xl border-2 border-[#FBDEB1] shadow-[0_3px_0_0_#FFE0B2]">
+                  <img
+                    src={`/jogo${i + 1}.png`}
+                    alt={`Jogo ${i + 1}`}
+                    className="w-14 h-14"
+                  />
+                </div>
+                <p className="font-bold text-center mt-2 text-sm sm:text-base">
+                  {[
+                    "Memória Visual",
+                    "Sequências lógicas",
+                    "Reconhecimento emocional",
+                    "Coordenação motora",
+                    "Histórias interativas",
+                    "Quebra-cabeças",
+                  ][i]}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
-    </section>
-  );
-
-  return (
-    <main className="bg-[#FFFCF2] min-h-screen">
-      <Header />
-      <ActionButtons />
-      <StatsCards />
-      <RecentSessions />
-      <PopularGames />
-    </main>
+    </div>
   );
 };
 
