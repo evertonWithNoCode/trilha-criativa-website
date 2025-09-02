@@ -21,7 +21,10 @@ export function AppSidebar() {
 
   // Verifica se a rota atual é "/account"
   const isAccountPage = location.pathname === '/account';
-   const isAccountPageinPacientes = location.pathname === '/pacientes';
+   const isAccountPageinPacientes =
+  location.pathname === '/pacientes' ||
+  location.pathname === '/pacientes/cadastro' ||
+  location.pathname.startsWith('/pacientes/detalhes/');
    const isHomePage = location.pathname === '/dashboard';
 
   // Busca a photo_url do usuário

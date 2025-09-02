@@ -97,7 +97,7 @@ export const PatientProfile: React.FC<PatientProfileProps> = ({
       <img
         src={avatarUrl}
         alt={`Foto de ${name}`}
-        className="w-[120px] h-[120px]  rounded-[56px]"
+        className="w-[120px] h-[120px]  rounded-[56px] object-cover"
       />
       <div className="flex flex-col justify-center items-center gap-1 self-stretch ">
         <h2 className="self-stretch text-[#2C2623] text-center text-[40px] font-extrabold leading-[48px] tracking-[-0.4px] relative">

@@ -1,11 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { AppSidebar } from '@/components/AppSideBar';
 import { SearchInput } from '@/components/SearchInput';
 import { FilterDropdown } from '@/components/FilterDropdown';
 import { PatientCard } from '@/components/PatientCard';
 import HelpButton from '@/components/HelpButton';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 interface Patient {
   id: string;
   name: string;
@@ -14,25 +15,65 @@ interface Patient {
   lastSession: string;
 }
 
-const mockPatients: Patient[] = [
-  { id: '1', name: 'Luiz Araújo', age: 10, image: 'https://api.builder.io/api/v1/image/assets/TEMP/658593cc62f44d00bfc3c15062e18f5d13f9fcc5?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '2', name: 'Maria Luíza', age: 6, image: 'https://api.builder.io/api/v1/image/assets/TEMP/5c956be17f983b36aa0df5b3da278ec1f720b633?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '3', name: 'Ana Alice', age: 11, image: 'https://api.builder.io/api/v1/image/assets/TEMP/ec5126e7d6b682863075e3194d5762aae1b647d1?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '4', name: 'Clarisse Lima', age: 11, image: 'https://api.builder.io/api/v1/image/assets/TEMP/ec5126e7d6b682863075e3194d5762aae1b647d1?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '5', name: 'Noa Castilho', age: 12, image: 'https://api.builder.io/api/v1/image/assets/TEMP/83cbd87a8d9c3e373a3374e665758b76bcfd0dd5?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '6', name: 'Paulo Duarte', age: 11, image: 'https://api.builder.io/api/v1/image/assets/TEMP/ec5126e7d6b682863075e3194d5762aae1b647d1?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '7', name: 'Mel Andrade', age: 5, image: 'https://api.builder.io/api/v1/image/assets/TEMP/9acb3fc4f248fb6a8faebca550959baac533d500?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '8', name: 'Tulio Dantas', age: 11, image: 'https://api.builder.io/api/v1/image/assets/TEMP/0f7f1fd7e0ac10510979406cd87252f941b53093?width=160', lastSession: 'Última sessão há 5 dias.' },
-  { id: '9', name: 'Theo Filho', age: 12, image: 'https://api.builder.io/api/v1/image/assets/TEMP/a7c2b8b037ffd00d307a0d47aea70e74df22d924?width=160', lastSession: 'Última sessão há 5 dias.' },
-];
-
 export const PatientDashboard: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+ const [searchQuery, setSearchQuery] = useState('');
   const [ageFilter, setAgeFilter] = useState('Todas as idades');
+  const [patients, setPatients] = useState<Patient[]>([]); // <-- pacientes do Supabase
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchPacientes = async () => {
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('pacientes')
+          .select(`
+            id,
+            nome,
+            data_nascimento,
+            photo_url
+          `)
+          .eq('profissional_associado', user.id);
+
+        if (error) throw error;
+
+        // transformar data do Supabase para o formato do seu PatientCard
+        const formattedPatients: Patient[] = (data || []).map(p => {
+          const birthDate = new Date(p.data_nascimento);
+          const ageDifMs = Date.now() - birthDate.getTime();
+          const ageDate = new Date(ageDifMs);
+          const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+          return {
+            id: p.id,
+            name: p.nome,
+            age,
+            image: p.photo_url || 'https://via.placeholder.com/160',
+            lastSession: 'Última sessão há 5 dias.' // você pode ajustar se tiver o campo
+          };
+        });
+
+        setPatients(formattedPatients);
+
+      } catch (err: any) {
+        console.error('Erro ao buscar pacientes:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPacientes();
+  }, [user]);
+
   const filteredPatients = useMemo(() => {
-    let filtered = mockPatients;
+    let filtered = patients; // <-- usar o estado real, não mock
     if (searchQuery) {
       filtered = filtered.filter(patient =>
         patient.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -55,7 +96,8 @@ export const PatientDashboard: React.FC = () => {
       }
     }
     return filtered;
-  }, [searchQuery, ageFilter]);
+  }, [patients, searchQuery, ageFilter]);
+
 
   return (
     <div className="w-full flex min-h-screen  bg-[#ffffff]">
@@ -83,7 +125,7 @@ export const PatientDashboard: React.FC = () => {
           <SearchInput onSearch={setSearchQuery} />
           <FilterDropdown onFilterChange={setAgeFilter} className=" sm:block" />
         </div>
-        <main className="w-[100%]  bg-[#FEF2CC]">
+        <main className="w-[100%]  bg-[#FEF2CC] h-full">
 
           <section className=' flex justify-center '>
             <div className="

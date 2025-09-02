@@ -55,7 +55,7 @@ export type Database = {
           registro_profissional: string | null;
           created_at: string;
           updated_at: string;
-          photo_url: string | null; // Nova coluna
+          photo_url: string | null;
         };
         Insert: {
           id: string;
@@ -66,7 +66,7 @@ export type Database = {
           registro_profissional?: string | null;
           created_at?: string;
           updated_at?: string;
-          photo_url?: string | null; // Nova coluna
+          photo_url?: string | null;
         };
         Update: {
           id?: string;
@@ -77,13 +77,62 @@ export type Database = {
           registro_profissional?: string | null;
           created_at?: string;
           updated_at?: string;
-          photo_url?: string | null; // Nova coluna
+          photo_url?: string | null;
         };
         Relationships: [
           {
             foreignKeyName: "usuarios_id_fkey";
             columns: ["id"];
             referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      pacientes: {
+        Row: {
+          id: string;
+          nome: string;
+          data_nascimento: string; // date em formato ISO
+          genero: string | null;
+          photo_url: string | null;
+          nome_responsavel: string | null;
+          email_responsavel: string | null;
+          diagnostico: string | null;
+          profissional_associado: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          nome: string;
+          data_nascimento: string;
+          genero?: string | null;
+          photo_url?: string | null;
+          nome_responsavel?: string | null;
+          email_responsavel?: string | null;
+          diagnostico?: string | null;
+          profissional_associado: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          data_nascimento?: string;
+          genero?: string | null;
+          photo_url?: string | null;
+          nome_responsavel?: string | null;
+          email_responsavel?: string | null;
+          diagnostico?: string | null;
+          profissional_associado?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pacientes_profissional_associado_fkey";
+            columns: ["profissional_associado"];
+            referencedRelation: "usuarios";
             referencedColumns: ["id"];
           }
         ];

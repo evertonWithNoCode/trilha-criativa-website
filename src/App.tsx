@@ -11,7 +11,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import NotFound from "./pages/NotFound";
 import { AccountPage } from "./pages/AccountPage";
 import { PatientDashboard } from "./pages/Pacientes";
-import PacienteDetalhes from "@/pages/pacientePage"
+import PacienteDetalhes from "@/pages/PacienteDetalhes"
 import CadastroPacientes from "./pages/CadastroPacientes";
 import PricingPage from "./pages/pricingPage";
 
@@ -45,7 +45,7 @@ const AppRoutes = () => (
     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
     <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
     <Route path="/pacientes" element={<ProtectedRoute><PatientDashboard /></ProtectedRoute>} />
-    <Route path="/pacientes/detalhes" element={<ProtectedRoute><PacienteDetalhes /></ProtectedRoute>} />
+    <Route path="/pacientes/detalhes/:id" element={<ProtectedRoute><PacienteDetalhes /></ProtectedRoute>} />
     <Route path="/pacientes/cadastro" element={<ProtectedRoute><CadastroPacientes /></ProtectedRoute>} />
      <Route path="/planos" element={<ProtectedRoute><PricingPage /></ProtectedRoute>} />
     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

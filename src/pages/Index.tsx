@@ -14,7 +14,11 @@ const Index: React.FC = () => {
   return (
     <main className="w-full h-screen relative overflow-hidden bg-[#FFFCF2] flex flex-col items-center justify-center max-md:p-5 max-sm:p-4">
       
-      <BackgroundSVG />
+       <img
+        src="/background.png"
+        alt="Background"
+        className=" z-10 absolute bottom-0 w-[100%] min-w-[1000px]"
+      />
       <header>
         <img
           src="https://api.builder.io/api/v1/image/assets/TEMP/09b8c8b2251ba50585cbbd8ee69d204f9ad06348?width=240"

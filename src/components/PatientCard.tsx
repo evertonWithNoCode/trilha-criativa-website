@@ -26,7 +26,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onViewPatient
           className="w-20 h-20 shrink-0 rounded-2xl object-cover"
         />
         <div className="flex h-16 flex-col justify-between items-start flex-[1_0_0]">
-          <h3 className="overflow-hidden text-[#2C2623] text-ellipsis text-lg font-extrabold leading-6 tracking-[0.18px]">
+          <h3 className="overflow-hidden text-[#2C2623] text-ellipsis text-lg font-extrabold leading-6 tracking-[0.18px] pb-14">
             {patient.name}
           </h3>
           <div className="flex justify-center items-center gap-2 border bg-[#FFFCF2] px-3 py-1 rounded-[100px] border-solid border-[#FCE699]">
@@ -59,7 +59,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onViewPatient
         <button
           onClick={() => {
             onViewPatient(patient.id);
-            navigate('/pacientes/detalhes');
+            navigate(`/pacientes/detalhes/${patient.id}`);
           }}
           className="flex h-10 justify-center items-center gap-2 bg-[#FCE699] px-5 py-2 rounded-xl hover:bg-[#F7B34D] transition-colors"
         >
