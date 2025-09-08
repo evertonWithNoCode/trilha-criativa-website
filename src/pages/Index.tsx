@@ -6,19 +6,30 @@ import HelpButton from '@/components/HelpButton';
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
-  
+
   const handleSignUp = () => {
     navigate('/signup');
   };
 
   return (
     <main className="w-full h-screen relative overflow-hidden bg-[#FFFCF2] flex flex-col items-center justify-center max-md:p-5 max-sm:p-4">
-      
-       <img
-        src="/background.png"
-        alt="Background"
-        className=" z-10 absolute bottom-0 w-[100%] min-w-[1000px]"
-      />
+
+
+      <div className='z-10 absolute bottom-0 w-full'>
+        <div className=" min-w-[1000px] h-[400px] bg-[#FEF2CC] flex justify-between items-start overflow-hidden">
+        </div>
+        {/* Círculos da esquerda */}
+        <div className="flex bottom-[350px] absolute bottom-[10px]">
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div> 
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+        </div>
+        {/* Círculos da direita */}
+        <div className="flex absolute right-0 bottom-[350px] gap-[-20px]">
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+        </div>
+      </div>
       <header>
         <img
           src="https://api.builder.io/api/v1/image/assets/TEMP/09b8c8b2251ba50585cbbd8ee69d204f9ad06348?width=240"
@@ -32,7 +43,7 @@ const Index: React.FC = () => {
           <h1 className="text-[#2C2623] text-center text-[32px] font-extrabold leading-8 tracking-[-0.32px] mb-4 max-md:text-[28px] max-md:leading-7 max-sm:text-2xl max-sm:leading-6 max-sm:px-4">
             Bem-vindo de volta!
           </h1>
-          
+
           <p className="text-[#2C2623] text-center text-lg font-medium leading-6 tracking-[0.18px] max-md:text-base max-md:leading-[22px] max-sm:text-sm max-sm:leading-5 max-sm:px-4">
             Acesse sua conta.
           </p>

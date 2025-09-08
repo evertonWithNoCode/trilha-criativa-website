@@ -26,6 +26,7 @@ export function AppSidebar() {
   location.pathname === '/pacientes/cadastro' ||
   location.pathname.startsWith('/pacientes/detalhes/');
    const isHomePage = location.pathname === '/dashboard';
+   const isGamePage = location.pathname === '/jogos' || location.pathname.startsWith('/jogos/detalhes/');;
 
   // Busca a photo_url do usuário
   useEffect(() => {
@@ -56,9 +57,9 @@ export function AppSidebar() {
   }, [user]);
 
   return (
-    <div className='min-h-[100%] bg-white'>
+    <div className='min-h-[100%] bg-white relative'>
       {/* 🔹 Sidebar para telas grandes */}
-      <div className="hidden md:flex  min-w-[112px] bg-white flex-col items-center py-10">
+      <div className="hidden md:flex  min-w-[112px] bg-white flex-col items-center py-10 ">
         {/* Logo */}
         <div className="mb-12">
           <img
@@ -90,8 +91,15 @@ export function AppSidebar() {
               }`}>
             <img src="/iconUserGroup.png" alt="Usuários" className="w-8 h-8" />
           </button>
-          <button 
-          className="w-16 h-16 rounded-full bg-white flex items-center justify-center p-4 shadow-sm">
+          <button
+          onClick={() => navigate('/jogos')} 
+          className={`w-16 h-16 rounded-[28px] flex items-center justify-center p-4 shadow-sm transition-colors
+              ${
+                isGamePage
+                  ? 'bg-[#FFFCF2] border-2 border-yellow-200'
+                  : 'bg-white border-2 border-transparent'
+              }`}
+          >
             <img src="/iconPlaylist.png" alt="Playlist" className="w-8 h-8" />
           </button>
           <button

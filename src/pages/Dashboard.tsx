@@ -4,12 +4,30 @@ import { AppSidebar } from "@/components/AppSideBar";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="flex w-full min-h-screen">
+    <div className="flex w-full min-h-screen relative overflow-hidden bg-[#FFFCF2]">
+      
+
+      <div className="z-0 absolute bottom-0 w-full ">
+        <div className="min-w-[1000px] h-[850px]  bg-[#FEF2CC] flex justify-between items-start overflow-hidden "></div>
+
+        {/* Círculos da esquerda */}
+        <div className="flex absolute left-0 bottom-[800px] gap-4 sm:pl-8 md:pl-[25px] lg:pl-[100px] xl:pl-[70px]">
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+        </div>
+
+        {/* Círculos da direita */}
+        <div className="flex absolute right-0 bottom-[800px] gap-4">
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+          <div className="w-[80px] h-[80px] bg-[#FEF2CC] rounded-full"></div>
+        </div>
+      </div>
       <AppSidebar />
 
-      <div className=" w-full font-sans text-gray-800 px-4 sm:px-8 md:px-16 lg:px-40">
-        {/* Background */}
-        
+      <div className="relative z-10 w-full font-sans text-gray-800 px-4 sm:px-8 md:px-16 lg:px-40">
+
+
 
         {/* Header */}
         <header className="pt-12 pb-20 md:pb-40">

@@ -14,26 +14,28 @@ import { PatientDashboard } from "./pages/Pacientes";
 import PacienteDetalhes from "@/pages/PacienteDetalhes"
 import CadastroPacientes from "./pages/CadastroPacientes";
 import PricingPage from "./pages/pricingPage";
+import GaleriaDeJogos from "./pages/GaleriaDeJogos";
+import DetalhesJogos from "./pages/DetalhesJogos";
 
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
   }
-  
+
   return user ? <>{children}</> : <Navigate to="/" replace />;
 };
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
   }
-  
+
   return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
@@ -47,7 +49,9 @@ const AppRoutes = () => (
     <Route path="/pacientes" element={<ProtectedRoute><PatientDashboard /></ProtectedRoute>} />
     <Route path="/pacientes/detalhes/:id" element={<ProtectedRoute><PacienteDetalhes /></ProtectedRoute>} />
     <Route path="/pacientes/cadastro" element={<ProtectedRoute><CadastroPacientes /></ProtectedRoute>} />
-     <Route path="/planos" element={<ProtectedRoute><PricingPage /></ProtectedRoute>} />
+    <Route path="/planos" element={<ProtectedRoute><PricingPage /></ProtectedRoute>} />
+    <Route path="/jogos" element={<ProtectedRoute><GaleriaDeJogos /></ProtectedRoute>} />
+    <Route path="/jogos/detalhes" element={<ProtectedRoute><DetalhesJogos /></ProtectedRoute>} />
     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
     <Route path="*" element={<NotFound />} />
   </Routes>
